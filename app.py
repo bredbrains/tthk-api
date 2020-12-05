@@ -12,3 +12,5 @@ api.add_resource(Consultations, '/consultations')
 
 if __name__ == '__main__':
     app.run()
+
+
