@@ -12,8 +12,6 @@ class Consultations(Resource):
             tablesbody = soup.findChildren('tbody')
             consultations = []
             weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-
-
             for table in tablesbody:
                 new_table = table
                 rows = new_table.find_all('tr')
@@ -29,14 +27,13 @@ class Consultations(Resource):
                     for i in range(2, 7):
                         if cells[i].text.strip() != "" and x == 0:
                             consultation['times'].update({0: {'weekday': weekdays[i-2], 'time': cells[i].text.strip()}})
-                            x += 1;
+                            x += 1
                         elif cells[i].text.strip() != "" and x == 1:
                             consultation['times'].update({1: {'weekday': weekdays[i-2], 'time': cells[i].text.strip()}})
                         else:
                             pass
                     if consultation['times'] != {} and consultation['teacher'] != "Õpetaja":
                         consultations.append(consultation)
-
             if (consultations != []):
                 return {'data': consultations}, 200
             return 204
