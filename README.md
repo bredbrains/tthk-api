@@ -1,13 +1,14 @@
 # Tallinna Tööstushariduskeskus API
 **TTHK REST API** for get changes, consultations and etc. in GET requests.
 ## How to run?
-```pip install flask flask_restful requests bs4```
+```pip install flask flask_restful bs4```
 
 ```python3 app.py```
 ## Dependencies
 * Python 3.9
 * Flask
 * Flask-RESTful
+* BeautifulSoup4
 ## Routes
 | Title | Example | Return |
 | ---- | ---- | ----- |
