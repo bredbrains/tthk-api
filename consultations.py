@@ -37,8 +37,3 @@ class Consultations(Resource):
             if (consultations != []):
                 return {'data': consultations}, 200
             return 204
-
-
-
-
-
