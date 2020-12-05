@@ -10,7 +10,8 @@ class Consultations(Resource):
             soup = BeautifulSoup(html_content, 'html.parser')
             tables = soup.findChildren('table')
             tablesbody = soup.findChildren('tbody')
-            Consultationes = []
+            consultations = []
+            weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
 
             for table in tablesbody:
@@ -18,21 +19,27 @@ class Consultations(Resource):
                 rows = new_table.find_all('tr')
                 for row in rows:
                     cells = row.find_all('td')
-                    change = {
-                        "teacher": cells[0].text.strip(),
-                        "ruum": cells[1].text.strip(),
-                        "Monday": cells[2].text.strip(),
-                        "Tuesday": cells[3].text.strip(),
-                        "Wednesday": cells[4].text.strip(),
-                        "Thursday": cells[5].text.strip(),
-                        "Friday": cells[6].text.strip(),
-                    }
-                    Consultationes.append(change)
+                    consultation = {
+                        'teacher': cells[0].text.strip(),
+                        'room': cells[1].text.strip(),
+                        'times': {}
 
-            if (Consultationes != []):
-                return {'data': Consultationes}, 200
-            else:
-                return 204
+                    }
+                    x = 0
+                    for i in range(2, 7):
+                        if cells[i].text.strip() != "" and x == 0:
+                            consultation['times'].update({0: {'weekday': weekdays[i-2], 'time': cells[i].text.strip()}})
+                            x += 1;
+                        elif cells[i].text.strip() != "" and x == 1:
+                            consultation['times'].update({1: {'weekday': weekdays[i-2], 'time': cells[i].text.strip()}})
+                        else:
+                            pass
+                    if consultation['times'] != {} and consultation['teacher'] != "Õpetaja":
+                        consultations.append(consultation)
+
+            if (consultations != []):
+                return {'data': consultations}, 200
+            return 204
 
 
 
