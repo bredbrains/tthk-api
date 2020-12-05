@@ -10,12 +10,12 @@ class Consultations(Resource):
             soup = BeautifulSoup(html_content, 'html.parser')
             tables = soup.findChildren('table')
             tablesbody = soup.findChildren('tbody')
-            changes = []
+            Consultationes = []
 
 
             for table in tablesbody:
-                my_table = table
-                rows = my_table.find_all('tr')
+                new_table = table
+                rows = new_table.find_all('tr')
                 for row in rows:
                     cells = row.find_all('td')
                     change = {
@@ -27,10 +27,10 @@ class Consultations(Resource):
                         "Thursday": cells[5].text.strip(),
                         "Friday": cells[6].text.strip(),
                     }
-                    changes.append(change)
+                    Consultationes.append(change)
 
-            if (changes != []):
-                return {'data': changes}, 200
+            if (Consultationes != []):
+                return {'data': Consultationes}, 200
             else:
                 return 204
 
