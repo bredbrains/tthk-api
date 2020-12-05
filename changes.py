@@ -2,6 +2,7 @@ from flask_restful import Resource
 from bs4 import BeautifulSoup
 import requests
 
+
 class Changes(Resource):
     def get(self):
         r = requests.get('http://www.tthk.ee/tunniplaani-muudatused/')
@@ -22,9 +23,10 @@ class Changes(Resource):
                     "teacher": cells[4].text.strip(),
                     "room": cells[5].text.strip()
                 }
-                if (change['dayofweek'] != "" and change['teacher'] != "Õpetaja"):
+                if change['dayofweek'] != "" and change['teacher'] != "Õpetaja":
                     changes.append(change)
-                else: continue
+                else:
+                    continue
         if (changes != []):
             return {'data': changes}, 200
             return 204
