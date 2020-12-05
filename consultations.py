@@ -5,12 +5,24 @@ import requests
 
 class Consultations(Resource):
     def get(self):
-            url = requests.get('https://www.tthk.ee/oppetoo/opetajate-konsultatsioonid/uldainete-konsultatsioonid/')
+        links = [
+            'https://www.tthk.ee/oppetoo/opetajate-konsultatsioonid/uldainete-konsultatsioonid/',
+            'https://www.tthk.ee/oppetoo/opetajate-konsultatsioonid/transporditehnika-valdkonna-konsultatsioonid/',
+            'https://www.tthk.ee/oppetoo/opetajate-konsultatsioonid/mehaanika-ja-metallitootluse-valdkonna-konsultatsioonid/',
+            'https://www.tthk.ee/oppetoo/opetajate-konsultatsioonid/mehhatroonka-osakonna-konsultatsiooid/',
+            'https://www.tthk.ee/infotehnoloogia-valdkonna-konsultatsioonid/',
+            'https://www.tthk.ee/logistika-valdkonna-konsultatsioonid/',
+            'https://www.tthk.ee/oppetoo/opetajate-konsultatsioonid/tekstiili-ja-kaubanduse-valdkonna-konsultatsioonid/'
+        ]
+        department_titles = ['general', 'transport', 'mehanics', 'energy', 'infotechnology', 'logistics', 'textile']
+        consultations = []
+        for j in range(len(links)):
+            department = []
+            url = requests.get(links[j])
             html_content = url.text
             soup = BeautifulSoup(html_content, 'html.parser')
             tables = soup.findChildren('table')
             tablesbody = soup.findChildren('tbody')
-            consultations = []
             weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
             for table in tablesbody:
                 new_table = table
@@ -26,14 +38,19 @@ class Consultations(Resource):
                     x = 0
                     for i in range(2, 7):
                         if cells[i].text.strip() != "" and x == 0:
-                            consultation['times'].update({0: {'weekday': weekdays[i-2], 'time': cells[i].text.strip()}})
+                            consultation['times'].update(
+                                {0: {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()}})
                             x += 1
                         elif cells[i].text.strip() != "" and x == 1:
-                            consultation['times'].update({1: {'weekday': weekdays[i-2], 'time': cells[i].text.strip()}})
+                            consultation['times'].update(
+                                {1: {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()}})
                         else:
                             pass
                     if consultation['times'] != {} and consultation['teacher'] != "Õpetaja":
-                        consultations.append(consultation)
-            if (consultations != []):
-                return {'data': consultations}, 200
-            return 204
+                        department.append(consultation)
+            if department:
+                consultations.append({'department': department_titles[j],
+                                     'consultations': department})
+        if consultations:
+            return {'data': consultations}, 200
+        return 204
