@@ -1,6 +1,5 @@
 from flask import Flask
-from flask_restful import Api, reqparse
-import ast
+from flask_restful import Api
 from changes import Changes
 from consultations import Consultations
 
