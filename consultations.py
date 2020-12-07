@@ -88,5 +88,5 @@ class Consultations(Resource):
                     consultations.append({'department': department_titles[j],
                                          'consultations': department})
         if consultations:
-            return {'data': consultations}, 200
+            return consultations, 200
         return None, 204

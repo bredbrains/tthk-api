@@ -28,5 +28,5 @@ class Changes(Resource):
                 else:
                     continue
         if changes != []:
-            return {'data': changes}, 200
+            return changes, 200
         return 204
