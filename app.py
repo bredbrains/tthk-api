@@ -4,6 +4,9 @@ from changes import Changes
 from consultations import Consultations
 
 app = Flask(__name__)
+app.config.fromenvvar('FLASK_ENV')
+app.config.fromenvvar('FLASK_SERVER_NAME')
+app.config.fromenvvar('FLASK_TESTING')
 api = Api(app)
 
 api.add_resource(Changes, '/changes')
