@@ -85,8 +85,8 @@ class Consultations(Resource):
                         if consultation['times'] != {} and consultation['teacher'] != "Õpetaja":
                             department.append(consultation)
                 if department:
-                    consultations.append({'department': department_titles[j],
-                                         'consultations': department})
+                    consultations.append({'depatments': {'department_title': department_titles[j],
+                                         'consultations': department}})
         if consultations:
             return consultations, 200
         return None, 204
