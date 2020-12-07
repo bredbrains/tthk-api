@@ -1,5 +1,6 @@
 flask
 flask_restful
+flask_cors
 requests
 bs4
 gunicorn

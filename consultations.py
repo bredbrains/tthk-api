@@ -70,7 +70,6 @@ class Consultations(Resource):
                             'teacher': cells[0].text.strip(),
                             'room': cells[1].text.strip(),
                             'times': {}
-
                         }
                         x = 0
                         for i in range(2, 7):
