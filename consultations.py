@@ -17,7 +17,7 @@ class Consultations(Resource):
             'https://www.tthk.ee/logistika-valdkonna-konsultatsioonid/',
             'https://www.tthk.ee/oppetoo/opetajate-konsultatsioonid/tekstiili-ja-kaubanduse-valdkonna-konsultatsioonid/'
         ]
-        department_titles = ['general', 'transport', 'mehanics', 'energy', 'infotechnology', 'logistics', 'textile']
+        department_titles = ['general', 'transport', 'mechanics', 'energy', 'infotechnology', 'logistics', 'textile']
         consultations = []
         selected_department = args['department']
         weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
@@ -85,5 +85,5 @@ class Consultations(Resource):
                         if consultation['times'] != {} and consultation['teacher'] != "Õpetaja":
                             consultations.append(consultation)
         if consultations:
-            return consultations, 200
+            return {'data': consultations}, 200
         return None, 204
