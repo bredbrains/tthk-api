@@ -48,7 +48,7 @@ class Consultations(Resource):
                             consultation['times'].append({'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
                         else:
                             pass
-                    if consultation['times'] != {} and consultation['teacher'] != "Õpetaja":
+                    if consultation['times'] != [] and consultation['teacher'] != "Õpetaja":
                         consultations.append(consultation)
         else:
             for j in range(len(links)):
@@ -79,7 +79,7 @@ class Consultations(Resource):
                                     {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
                             else:
                                 pass
-                        if consultation['times'] != {} and consultation['teacher'] != "Õpetaja":
+                        if consultation['times'] != []  and consultation['teacher'] != "Õpetaja":
                             consultations.append(consultation)
         if consultations:
             return {'data': consultations}, 200
