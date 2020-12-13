@@ -69,11 +69,11 @@ class Consultations(Resource):
             else:
                 pass
         else:
-            for i in enumerate(links):
+            for i, link in enumerate(links):
                 if i == 6:
-                    consultations.append(consultation_parser.parse_consultations(links[i], True))
+                    consultations.append(consultation_parser.parse_consultations(link, True))
                 else:
-                    consultations.append(consultation_parser.parse_consultations(links[i], False))
+                    consultations.append(consultation_parser.parse_consultations(link, False))
         if consultations:
             return {'data': consultations}, 200
         return None, 204
