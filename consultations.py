@@ -42,6 +42,11 @@ class Consultations(Resource):
                     start_cell = 2
                     end_cell = 7
                     if selected_department == 6:
+                        consultation = {
+                            'teacher': cells[0].text.strip(),
+                            'room': cells[2].text.strip(),
+                            'times': []
+                        }
                         start_cell = 3
                         end_cell = 8
                     x = 0
@@ -76,6 +81,11 @@ class Consultations(Resource):
                         start_cell = 2
                         end_cell = 7
                         if selected_department == 6:
+                            consultation = {
+                                'teacher': cells[0].text.strip(),
+                                'room': cells[2].text.strip(),
+                                'times': []
+                            }
                             start_cell = 3
                             end_cell = 8
                         x = 0
