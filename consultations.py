@@ -13,7 +13,6 @@ class ConsultationsParser():
         html_content = get_request.text
         soup = BeautifulSoup(html_content, 'html.parser')
         tablesbodies = soup.findChildren('tbody')
-        print(url)
         for table in tablesbodies:
             new_table = table
             rows = new_table.find_all('tr')
