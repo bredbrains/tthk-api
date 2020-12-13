@@ -7,7 +7,7 @@ department_titles = ['general', 'transport', 'mechanics', 'energy', 'infotechnol
 
 
 class ConsultationsParser():
-    def parse_consultations(self, url, is_textile):
+    def parse_consultations(self, url, is_textile, department):
         parsed_consultations = []
         get_request = requests.get(url)
         html_content = get_request.text
@@ -21,6 +21,7 @@ class ConsultationsParser():
                 consultation = {
                     'teacher': cells[0].text.strip(),
                     'room': cells[1].text.strip(),
+                    'department': department,
                     'times': []
                 }
                 start_cell = 2
@@ -29,6 +30,7 @@ class ConsultationsParser():
                     consultation = {
                         'teacher': cells[0].text.strip(),
                         'room': cells[2].text.strip(),
+                        'department': department,
                         'times': []
                     }
                     start_cell = 3
@@ -62,17 +64,17 @@ class Consultations(Resource):
             consultations = []
             selected_department = args['department']
             if selected_department == 6:
-                consultations.append(consultation_parser.parse_consultations(links[selected_department], True))
+                consultations.append = consultation_parser.parse_consultations(links[selected_department], True, department_titles[selected_department])
             elif 0 <= selected_department <= 5:
-                consultations.append(consultation_parser.parse_consultations(links[selected_department], False))
+                consultations = consultation_parser.parse_consultations(links[selected_department], False, department_titles[selected_department])
             else:
                 pass
         else:
             for i, link in enumerate(links):
                 if i == 6:
-                    consultations.append(consultation_parser.parse_consultations(link, True))
+                    consultations += consultation_parser.parse_consultations(link, True, department_titles[i])
                 else:
-                    consultations.append(consultation_parser.parse_consultations(link, False))
+                    consultations += consultation_parser.parse_consultations(link, False, department_titles[i])
         if consultations:
             return {'data': consultations}, 200
         return None, 204
