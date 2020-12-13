@@ -38,7 +38,6 @@ class Consultations(Resource):
                         'teacher': cells[0].text.strip(),
                         'room': cells[1].text.strip(),
                         'times': []
-
                     }
                     x = 0
                     for i in range(2, 7):
@@ -67,7 +66,7 @@ class Consultations(Resource):
                             'teacher': cells[0].text.strip(),
                             'room': cells[1].text.strip(),
                             'department': department_titles[j],
-                            'times': {}
+                            'times': []
                         }
                         x = 0
                         for i in range(2, 7):
