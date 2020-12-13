@@ -39,8 +39,13 @@ class Consultations(Resource):
                         'room': cells[1].text.strip(),
                         'times': []
                     }
+                    start_cell = 2
+                    end_cell = 7
+                    if selected_department == 6:
+                        start_cell = 3
+                        end_cell = 8
                     x = 0
-                    for i in range(2, 7):
+                    for i in range(start_cell, end_cell):
                         if cells[i].text.strip() != "" and x == 0:
                             consultation['times'].append({'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
                             x += 1
@@ -68,8 +73,13 @@ class Consultations(Resource):
                             'department': department_titles[j],
                             'times': []
                         }
+                        start_cell = 2
+                        end_cell = 7
+                        if selected_department == 6:
+                            start_cell = 3
+                            end_cell = 8
                         x = 0
-                        for i in range(2, 7):
+                        for i in range(start_cell, end_cell):
                             if cells[i].text.strip() != "" and x == 0:
                                 consultation['times'].append(
                                     {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
