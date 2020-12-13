@@ -55,7 +55,6 @@ class Consultations(Resource):
                         consultations.append(consultation)
         else:
             for j in range(len(links)):
-                department = []
                 url = requests.get(links[j])
                 html_content = url.text
                 soup = BeautifulSoup(html_content, 'html.parser')
@@ -69,6 +68,7 @@ class Consultations(Resource):
                         consultation = {
                             'teacher': cells[0].text.strip(),
                             'room': cells[1].text.strip(),
+                            'department': department_titles[j],
                             'times': {}
                         }
                         x = 0
@@ -83,10 +83,7 @@ class Consultations(Resource):
                             else:
                                 pass
                         if consultation['times'] != {} and consultation['teacher'] != "Õpetaja":
-                            department.append(consultation)
-                if department:
-                    consultations.append({'depatments': {'department_title': department_titles[j],
-                                         'consultations': department}})
+                            consultations.append(consultation)
         if consultations:
             return consultations, 200
         return None, 204
