@@ -37,18 +37,16 @@ class Consultations(Resource):
                     consultation = {
                         'teacher': cells[0].text.strip(),
                         'room': cells[1].text.strip(),
-                        'times': {}
+                        'times': []
 
                     }
                     x = 0
                     for i in range(2, 7):
                         if cells[i].text.strip() != "" and x == 0:
-                            consultation['times'].update(
-                                {0: {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()}})
+                            consultation['times'].append({'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
                             x += 1
                         elif cells[i].text.strip() != "" and x == 1:
-                            consultation['times'].update(
-                                {1: {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()}})
+                            consultation['times'].append({'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
                         else:
                             pass
                     if consultation['times'] != {} and consultation['teacher'] != "Õpetaja":
@@ -74,12 +72,12 @@ class Consultations(Resource):
                         x = 0
                         for i in range(2, 7):
                             if cells[i].text.strip() != "" and x == 0:
-                                consultation['times'].update(
-                                    {0: {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()}})
+                                consultation['times'].append(
+                                    {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
                                 x += 1
                             elif cells[i].text.strip() != "" and x == 1:
-                                consultation['times'].update(
-                                    {1: {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()}})
+                                consultation['times'].append(
+                                    {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
                             else:
                                 pass
                         if consultation['times'] != {} and consultation['teacher'] != "Õpetaja":
