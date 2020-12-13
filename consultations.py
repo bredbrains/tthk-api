@@ -1,8 +1,10 @@
 from flask_restful import Resource, reqparse
 from bs4 import BeautifulSoup
 import requests
+
 weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 department_titles = ['general', 'transport', 'mechanics', 'energy', 'infotechnology', 'logistics', 'textile']
+
 
 class ConsultationsParser():
     def parse_consultations(self, url, is_textile):
@@ -39,6 +41,7 @@ class ConsultationsParser():
                     parsed_consultations.append(consultation)
         return parsed_consultations
 
+
 class Consultations(Resource):
     def get(self):
         consultation_parser = ConsultationsParser()
@@ -59,12 +62,12 @@ class Consultations(Resource):
         if selected_department is not None:
             consultations = []
             selected_department = args['department']
-            if selected_department < 0 or selected_department > 6:
-                return None, 204
-            elif selected_department == 6:
-                consultation_parser.parse_consultations(links[selected_department], True)
+            if selected_department == 6:
+                consultations.append(consultation_parser.parse_consultations(links[selected_department], True))
+            elif 0 <= selected_department <= 5:
+                consultations.append(consultation_parser.parse_consultations(links[selected_department], False))
             else:
-                consultation_parser.parse_consultations(links[selected_department], False)
+                pass
         else:
             for i in range(len(links)):
                 if i == 6:
