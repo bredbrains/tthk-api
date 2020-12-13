@@ -1,10 +1,47 @@
 from flask_restful import Resource, reqparse
 from bs4 import BeautifulSoup
 import requests
+weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+department_titles = ['general', 'transport', 'mechanics', 'energy', 'infotechnology', 'logistics', 'textile']
 
+class ConsultationsParser():
+    def parse_consultations(self, url, is_textile):
+        parsed_consultations = []
+        get_request = requests.get(url)
+        html_content = get_request.text
+        soup = BeautifulSoup(html_content, 'html.parser')
+        tablesbodies = soup.findChildren('tbody')
+        print(url)
+        for table in tablesbodies:
+            new_table = table
+            rows = new_table.find_all('tr')
+            for row in rows:
+                cells = row.find_all('td')
+                consultation = {
+                    'teacher': cells[0].text.strip(),
+                    'room': cells[1].text.strip(),
+                    'times': []
+                }
+                start_cell = 2
+                end_cell = 7
+                if is_textile:
+                    consultation = {
+                        'teacher': cells[0].text.strip(),
+                        'room': cells[2].text.strip(),
+                        'times': []
+                    }
+                    start_cell = 3
+                    end_cell = 7
+                for i in range(start_cell, end_cell):
+                    if cells[i].text.strip() != "":
+                        consultation['times'].append({'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
+                if consultation['times'] != [] and consultation['teacher'] != "Õpetaja":
+                    parsed_consultations.append(consultation)
+        return parsed_consultations
 
 class Consultations(Resource):
     def get(self):
+        consultation_parser = ConsultationsParser()
         parser = reqparse.RequestParser()
         parser.add_argument('department', type=int)
         args = parser.parse_args()
@@ -17,90 +54,23 @@ class Consultations(Resource):
             'https://www.tthk.ee/logistika-valdkonna-konsultatsioonid/',
             'https://www.tthk.ee/oppetoo/opetajate-konsultatsioonid/tekstiili-ja-kaubanduse-valdkonna-konsultatsioonid/'
         ]
-        department_titles = ['general', 'transport', 'mechanics', 'energy', 'infotechnology', 'logistics', 'textile']
         consultations = []
         selected_department = args['department']
-        weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         if selected_department is not None:
+            consultations = []
+            selected_department = args['department']
             if selected_department < 0 or selected_department > 6:
                 return None, 204
-            url = requests.get(links[selected_department])
-            html_content = url.text
-            soup = BeautifulSoup(html_content, 'html.parser')
-            tables = soup.findChildren('table')
-            tablesbody = soup.findChildren('tbody')
-            for table in tablesbody:
-                new_table = table
-                rows = new_table.find_all('tr')
-                for row in rows:
-                    cells = row.find_all('td')
-                    consultation = {
-                        'teacher': cells[0].text.strip(),
-                        'room': cells[1].text.strip(),
-                        'times': []
-                    }
-                    start_cell = 2
-                    end_cell = 7
-                    if selected_department == 6:
-                        consultation = {
-                            'teacher': cells[0].text.strip(),
-                            'room': cells[2].text.strip(),
-                            'times': []
-                        }
-                        start_cell = 3
-                        end_cell = 8
-                    x = 0
-                    for i in range(start_cell, end_cell):
-                        if cells[i].text.strip() != "" and x == 0:
-                            consultation['times'].append({'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
-                            x += 1
-                        elif cells[i].text.strip() != "" and x == 1:
-                            consultation['times'].append({'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
-                        else:
-                            pass
-                    if consultation['times'] != [] and consultation['teacher'] != "Õpetaja":
-                        consultations.append(consultation)
+            elif selected_department == 6:
+                consultation_parser.parse_consultations(links[selected_department], True)
+            else:
+                consultation_parser.parse_consultations(links[selected_department], False)
         else:
-            for j in range(len(links)):
-                url = requests.get(links[j])
-                html_content = url.text
-                soup = BeautifulSoup(html_content, 'html.parser')
-                tables = soup.findChildren('table')
-                tablesbody = soup.findChildren('tbody')
-                for table in tablesbody:
-                    new_table = table
-                    rows = new_table.find_all('tr')
-                    for row in rows:
-                        cells = row.find_all('td')
-                        consultation = {
-                            'teacher': cells[0].text.strip(),
-                            'room': cells[1].text.strip(),
-                            'department': department_titles[j],
-                            'times': []
-                        }
-                        start_cell = 2
-                        end_cell = 7
-                        if selected_department == 6:
-                            consultation = {
-                                'teacher': cells[0].text.strip(),
-                                'room': cells[2].text.strip(),
-                                'times': []
-                            }
-                            start_cell = 3
-                            end_cell = 8
-                        x = 0
-                        for i in range(start_cell, end_cell):
-                            if cells[i].text.strip() != "" and x == 0:
-                                consultation['times'].append(
-                                    {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
-                                x += 1
-                            elif cells[i].text.strip() != "" and x == 1:
-                                consultation['times'].append(
-                                    {'weekday': weekdays[i - 2], 'time': cells[i].text.strip()})
-                            else:
-                                pass
-                        if consultation['times'] != []  and consultation['teacher'] != "Õpetaja":
-                            consultations.append(consultation)
+            for i in range(len(links)):
+                if i == 6:
+                    consultations.append(consultation_parser.parse_consultations(links[i], True))
+                else:
+                    consultations.append(consultation_parser.parse_consultations(links[i], False))
         if consultations:
             return {'data': consultations}, 200
         return None, 204
