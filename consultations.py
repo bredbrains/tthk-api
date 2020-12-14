@@ -63,9 +63,9 @@ class Consultations(Resource):
         if selected_department is not None:
             consultations = []
             selected_department = args['department']
-            if selected_department == 6:
+            if selected_department == 0 or selected_department == 6:
                 consultations.append = consultation_parser.parse_consultations(links[selected_department], True, department_titles[selected_department])
-            elif 0 <= selected_department <= 5:
+            elif 0 < selected_department <= 5:
                 consultations = consultation_parser.parse_consultations(links[selected_department], False, department_titles[selected_department])
             else:
                 pass
