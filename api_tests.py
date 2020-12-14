@@ -10,7 +10,7 @@ links = ['https://www.tthk.ee/oppetoo/opetajate-konsultatsioonid/uldainete-konsu
 
 class ConsultationsTest(unittest.TestCase):
     def test_consultations_general(self):
-        actual = ConsultationsParser.parse_consultations(self, links[0], False, 'general')
+        actual = ConsultationsParser.parse_consultations(self, links[0], True, 'general')
         self.assertIsNotNone(actual)
     def test_consultations_transports(self):
         actual = ConsultationsParser.parse_consultations(self, links[1], False, 'transport')
