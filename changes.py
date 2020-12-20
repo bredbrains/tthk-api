@@ -27,6 +27,6 @@ class Changes(Resource):
                     changes.append(change)
                 else:
                     continue
-        if changes != []:
+        if changes:
             return changes, 200
         return 204
