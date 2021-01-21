@@ -1,11 +1,13 @@
-from flask_restful import Resource
-from bs4 import BeautifulSoup
 import requests
+from bs4 import BeautifulSoup
+from flask_restful import Resource
+
+from static import Static
 
 
-class Changes(Resource):
-    def get(self):
-        r = requests.get('http://www.tthk.ee/tunniplaani-muudatused/')
+class ChangesParser():
+    def parse_changes(self, url):
+        r = requests.get(url)
         html_content = r.text
         soup = BeautifulSoup(html_content, 'html.parser')
         tables = soup.findChildren('table')
@@ -15,18 +17,17 @@ class Changes(Resource):
             rows = my_table.find_all('tr')
             for row in rows:
                 cells = row.find_all('td')
-                change = {
-                    "dayofweek": cells[0].text.strip(),
-                    "date": cells[1].text.strip(),
-                    "group": cells[2].text.strip(),
-                    "lessons": cells[3].text.strip(),
-                    "teacher": cells[4].text.strip(),
-                    "room": cells[5].text.strip()
-                }
-                if change['dayofweek'] != "" and change['teacher'] != "Õpetaja":
+                change = Static.change_template(cells)
+                if change and change['dayofweek'] != "" and change['teacher'] != "Õpetaja":
                     changes.append(change)
-                else:
-                    continue
+                continue
+        return changes
+
+
+class Changes(Resource):
+    def get(self):
+        url = Static.changes_link()
+        changes = ChangesParser().parse_changes(url)
         if changes:
-            return changes, 200
-        return 204
+            return {"data": changes}, 200
+        return None, 204
