@@ -11,7 +11,7 @@ Routes can be seen [there](https://github.com/bredbrains/tthk-api/blob/master/ro
 * Nikolas Laus ([@blinchk](https://github.com/blinchk))
 * Vladislav Narožni ([@JamesEST](https://github.com/JamesEST))
 ## Powered applications
-* [TTHK Consultations Web](https://github.com/bredbrains/tthk-api)
+* [TTHK Consultations Web](https://github.com/bredbrains/tthk-consultations)
 ## How to run?
 * ### Install requirements
 ```
