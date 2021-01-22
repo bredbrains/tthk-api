@@ -54,19 +54,21 @@ class Consultations(Resource):
             consultations = []
             department = args['department']
             if department == 0 or department == 6:
-                consultations.append = ConsultationsParser.parse_consultations(links[department], True,
-                                                                               department_titles[department])
+                consultations = ConsultationsParser.parse_consultations(self, links[department], True,
+                                                                        department_titles[department])
             elif 0 < department <= 5:
-                consultations = ConsultationsParser.parse_consultations(links[department], False,
+                consultations = ConsultationsParser.parse_consultations(self, links[department], False,
                                                                         department_titles[department])
             else:
-                pass
+                return None, 400
         else:
             for department, link in enumerate(links):
                 if department == 0 or department == 6:
-                    consultations += ConsultationsParser.parse_consultations(link, True, department_titles[department])
+                    consultations += ConsultationsParser.parse_consultations(self, link, True,
+                                                                             department_titles[department])
                 else:
-                    consultations += ConsultationsParser.parse_consultations(link, False, department_titles[department])
+                    consultations += ConsultationsParser.parse_consultations(self, link, False,
+                                                                             department_titles[department])
         if consultations:
             return {'data': consultations}, 200
         return None, 204
