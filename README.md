@@ -1,10 +1,17 @@
 # Tallinna Tööstushariduskeskus API
+![Lines of code](https://img.shields.io/tokei/lines/github/bredbrains/tthk-api)
+![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/bredbrains/tthk-api)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bredbrains/tthk-api/CodeQL%20+%20pyTest)
+![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m786991239-d3351dfc1019b145e07f8548)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/flask)
+
 **TTHK REST API** for get changes, consultations and etc. in GET requests.
+Routes can be seen [there](https://github.com/bredbrains/tthk-api/blob/master/routes/README.md).
 ## Team
 * Nikolas Laus ([@blinchk](https://github.com/blinchk))
 * Vladislav Narožni ([@JamesEST](https://github.com/JamesEST))
 ## Powered applications
-* [TTHK Consultations Web](https://github.com/bredbrains/tthk-api)
+* [TTHK Consultations Web](https://github.com/bredbrains/tthk-consultations)
 ## How to run?
 * ### Install requirements
 ```
@@ -12,7 +19,7 @@ pip install -r requirements.txt
 ```
 * ### Run tests
 ```
-pytest api_tests.py
+pytest tests.py
 ```
 * ### Run application with Gunicorn
 ```
@@ -26,60 +33,3 @@ gunicorn app:app
 * BeautifulSoup4
 * Gunicorn
 * Requests
-## Routes
-| Title | Example | Return |
-| ---- | ---- | ----- |
-| Changes | /changes | Returns full list of changes |
-| Consultations | /consultations | Returns full list of consultations |
-| Consultations by department | /consultations?department=3 | Returns list of consultations for selected department |
-### Departments
-| ID | Department |
-| ---- | ---- |
-| 0 | General subjects |
-| 1 | Transports |
-| 2 | Mechanics |
-| 3 | Energy |
-| 4 | IT |
-| 5 | Logistics |
-| 6 | Textile & Sales |
-### Response examples
-#### Consultations
-*Keep in mind that email will be returned, when it defined on the page.*
-```
-{
-    "data": [
-        {
-            "teacher": "Baum, Eduard",
-            "room": "B 148",
-            "email": "eduard.baum@tthk.ee",
-            "department": "general",
-            "times": [
-                {
-                    "weekday": "Wednesday",
-                    "time": "15.10-15.55"
-                },
-                {
-                    "weekday": "Thursday",
-                    "time": "15.10-15.55"
-                }
-            ]
-        }
-     ]
-}
-```
-#### Changes
-```
-{
-  "data": [
-      {
-          "dayofweek": "T",
-          "date": "15.12.2020",
-          "group": "KRRgeÕ20",
-          "lessons": "algus kell 16.30",
-          "teacher": "K.Kuiv – Töökorraldus",
-          "room": "Distantsõpe"
-      }
-   }
-}
-```
-
