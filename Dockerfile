@@ -4,5 +4,3 @@ COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 COPY . .
 RUN python3 -m pytest tests.py
-EXPOSE 8000:3000/tcp
-EXPOSE 8000:3000/udp
