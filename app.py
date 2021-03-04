@@ -19,4 +19,4 @@ api.add_resource(Changes, '/changes')
 api.add_resource(Consultations, '/consultations')
 
 if __name__ == '__main__':
-    app.run(threaded=True, port=8000, host='0.0.0.0')
+    app.run(threaded=True, port=8000, host='0.0.0.0', ssl_context='adhoc')
