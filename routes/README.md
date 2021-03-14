@@ -17,7 +17,7 @@
 ### Response examples
 #### Consultations
 *Keep in mind that email will be returned, when it defined on the page.*
-```
+```json
 {
     "data": [
         {
@@ -40,7 +40,7 @@
 }
 ```
 #### Changes
-```
+```json
 {
   "data": [
       {
