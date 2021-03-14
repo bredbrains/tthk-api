@@ -14,19 +14,19 @@ class ConsultationsTest(TestCase):
         self.parser = ConsultationsParser()
 
     def test_consultations_general(self):
-        actual = self.parser.parse_consultations(links[0], True, 'general')
+        actual = parse_consultations(links[0], True, 'general')
         self.assertIsNotNone(actual)
 
     def test_consultations_transports(self):
-        actual = self.parser.parse_consultations(links[1], False, 'transport')
+        actual = parse_consultations(links[1], False, 'transport')
         self.assertIsNotNone(actual)
 
     def test_consultations_logistics(self):
-        actual = self.parser.parse_consultations(links[5], False, 'logistics')
+        actual = parse_consultations(links[5], False, 'logistics')
         self.assertIsNotNone(actual)
 
     def test_consultations_ITcount(self):
-        actual = self.parser.parse_consultations(links[4], False, 'infotechnology')
+        actual = parse_consultations(links[4], False, 'infotechnology')
         self.assertGreater(len(actual), 0)
 
 
