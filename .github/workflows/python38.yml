@@ -2,7 +2,6 @@ name: "Python 3.8"
 
 on:
   push:
-    branches: [ master ]
     paths: [ '**.py', '**.yml' ]
   pull_request:
     branches: [ master ]
