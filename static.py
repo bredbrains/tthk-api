@@ -25,6 +25,10 @@ class Static:
         return ['general', 'transport', 'mechanics', 'energy', 'infotechnology', 'logistics', 'textile']
 
     @staticmethod
+    def department_titles_groups_page():
+        return ['transport', 'mechanics', 'energy', 'beauty', 'textile', 'logistics', 'infotechnology']
+
+    @staticmethod
     def consultation_template(cells, department):
         try:
             return {
@@ -47,6 +51,29 @@ class Static:
                 "lessons": cells[3].text.strip(),
                 "teacher": cells[4].text.strip(),
                 "room": cells[5].text.strip()
+            }
+        except IndexError:
+            return None
+
+
+    @staticmethod
+    def study_language(text):
+        languages = {
+            "E": "estonian",
+            "V": "russian",
+            "E/V": "estonian/russian"
+        }
+        return languages[text]
+
+    @staticmethod
+    def group_template(cells, department):
+        try:
+            return {
+                "group": cells[0].text.strip(),
+                "department": Static.department_titles_groups_page(department),
+                "language": Static.study_language(cells[1].text.strip()),
+                "teacher": cells[2].text.strip(),
+                "contact": cells[3].text.strip()
             }
         except IndexError:
             return None
