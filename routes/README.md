@@ -4,6 +4,8 @@
 | Changes | /changes | Returns full list of changes |
 | Consultations | /consultations | Returns full list of consultations |
 | Consultations by department | /consultations?department=3 | Returns list of consultations for selected department |
+| Teachers | /teachers | Returns full list of teachers |
+| Groups | /groups | Returns full list of groups |
 ### Departments
 | ID | Department |
 | ---- | ---- |
@@ -51,6 +53,20 @@
           "teacher": "K.Kuiv – Töökorraldus",
           "room": "Distantsõpe"
       }
-   }
+  ]
+}
+```
+#### Groups
+```json
+{
+  "data": [
+    {
+      "group": "AUTpe20_1",
+      "department": "transport",
+      "language": "estonian",
+      "teacher": "Luule Press",
+      "contact": "luule.press@tthk.ee"
+    }
+  ]
 }
 ```

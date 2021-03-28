@@ -1,10 +1,12 @@
-name: "Python 3.9"
+name: "Python 3.7"
 
 on:
   push:
     paths: [ '**.py', '**.yml' ]
   pull_request:
     branches: [ master ]
+  schedule:
+    - cron: '24 2 * * 6'
 
 jobs:
   analyze:
@@ -38,10 +40,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         
-      - name: Set up Python 3.8
+      - name: Set up Python 3.7
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.7
 
       - name: Install dependencies
         run: |
