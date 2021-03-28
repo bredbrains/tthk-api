@@ -50,7 +50,7 @@
           "lessons": "algus kell 16.30",
           "teacher": "K.Kuiv – Töökorraldus",
           "room": "Distantsõpe"
-      }
+      }]
    }
 }
 ```
