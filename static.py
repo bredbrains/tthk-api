@@ -17,6 +17,10 @@ class Static:
         return 'http://www.tthk.ee/tunniplaani-muudatused/'
 
     @staticmethod
+    def groups_link():
+        return 'https://www.tthk.ee/oppetoo/tunniplaan/ruhmajuhatajad/'
+
+    @staticmethod
     def weekdays():
         return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
@@ -67,10 +71,11 @@ class Static:
 
     @staticmethod
     def group_template(cells, department):
+        departments = Static.department_titles_groups_page()
         try:
             return {
                 "group": cells[0].text.strip(),
-                "department": Static.department_titles_groups_page(department),
+                "department": departments[department],
                 "language": Static.study_language(cells[1].text.strip()),
                 "teacher": cells[2].text.strip(),
                 "contact": cells[3].text.strip()
