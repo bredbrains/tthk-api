@@ -2,7 +2,6 @@ name: "Python 3.6"
 
 on:
   push:
-    branches: [ master ]
     paths: [ '**.py', '**.yml' ]
   pull_request:
     branches: [ master ]
