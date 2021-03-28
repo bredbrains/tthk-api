@@ -23,7 +23,7 @@ class Status(Resource):
         statuses = []
         for link in links:
             request = requests.get(link)
-            statuses.append(request.status_code)
+            statuses.append(status_codes[request.status_code])
         return {'data': {
             'TTHK': statuses[0],
             'Consultations Web': statuses[1],
