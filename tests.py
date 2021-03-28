@@ -3,32 +3,10 @@ import unittest
 from unittest import TestCase
 
 from app import app
-from routes.consultations import ConsultationsParser
+import routes.consultations
 from static import Static
 
 links = Static.consultation_links()
-
-
-class ConsultationsTest(TestCase):
-    def setUp(self):
-        self.parser = ConsultationsParser()
-
-    def test_consultations_general(self):
-        actual = self.parser.parse_consultations(links[0], True, 'general')
-        self.assertIsNotNone(actual)
-
-    def test_consultations_transports(self):
-        actual = self.parser.parse_consultations(links[1], False, 'transport')
-        self.assertIsNotNone(actual)
-
-    def test_consultations_logistics(self):
-        actual = self.parser.parse_consultations(links[5], False, 'logistics')
-        self.assertIsNotNone(actual)
-
-    def test_consultations_ITcount(self):
-        actual = self.parser.parse_consultations(links[4], False, 'infotechnology')
-        self.assertGreater(len(actual), 0)
-
 
 class FlaskTests(TestCase):
     def setUp(self):
