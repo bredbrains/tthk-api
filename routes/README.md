@@ -6,6 +6,7 @@
 | Consultations by department | /consultations?department=3 | Returns list of consultations for selected department |
 | Teachers | /teachers | Returns full list of teachers |
 | Groups | /groups | Returns full list of groups |
+| Status | /status | Returns statuses of services |
 ### Departments
 | ID | Department |
 | ---- | ---- |
@@ -68,5 +69,18 @@
       "contact": "luule.press@tthk.ee"
     }
   ]
+}
+```
+#### Statuses
+```json
+{
+    "data": {
+        "TTHK": "OK",
+        "Consultations Web": "OK",
+        "API Consultations": "OK",
+        "API Changes": "OK",
+        "API Teachers": "OK",
+        "API Groups": "OK"
+    }
 }
 ```
