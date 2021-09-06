@@ -13,8 +13,8 @@ def parse_consultations(url, contains_email, department):
     get_request = requests.get(url)
     html_content = get_request.text
     soup = BeautifulSoup(html_content, 'html.parser')
-    tbodies = soup.findChildren('tbody')
-    for table in tbodies:
+    tables = soup.findChildren('tbody')
+    for table in tables:
         new_table = table
         rows = new_table.find_all('tr')
         for row in rows:
@@ -68,5 +68,5 @@ class Consultations(Resource):
                     consultations += parse_consultations(link, False,
                                                          department_titles[department])
         if consultations:
-            return {'data': consultations}, 200
+            return consultations, 200
         return None, 204

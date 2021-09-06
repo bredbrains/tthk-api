@@ -18,17 +18,18 @@ status_codes = {
     500: 'Internal Server Error'
 }
 
+
 class Status(Resource):
     def get(self):
         statuses = []
         for link in links:
             request = requests.get(link)
             statuses.append(status_codes[request.status_code])
-        return {'data': {
+        return {
             'TTHK': statuses[0],
             'Consultations Web': statuses[1],
             'API Consultations': statuses[2],
             'API Changes': statuses[3],
             'API Teachers': statuses[4],
             'API Groups': statuses[5]
-        }}, 200
+        }, 200

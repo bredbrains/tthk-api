@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from flask_restful import Resource, reqparse
+from flask_restful import Resource
+
 from static import Static
 
 
@@ -24,10 +25,11 @@ def parse_groups(url):
                     parsed_groups.append(group)
     return parsed_groups
 
+
 class Groups(Resource):
     def get(self):
         url = Static.groups_link()
-        changes = parse_groups(url)
-        if changes:
-            return {"data": changes}, 200
+        groups = parse_groups(url)
+        if groups:
+            return groups, 200
         return None, 204

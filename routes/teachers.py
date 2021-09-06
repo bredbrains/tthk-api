@@ -41,5 +41,5 @@ class Teachers(Resource):
             for department, link in enumerate(links):
                 teachers += parse_teachers(links[department])
         if teachers:
-            return {'data': teachers}, 200
+            return teachers, 200
         return None, 204

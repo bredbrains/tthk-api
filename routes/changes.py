@@ -29,5 +29,5 @@ class Changes(Resource):
         url = Static.changes_link()
         changes = ChangesParser().parse_changes(url)
         if changes:
-            return {"data": changes}, 200
+            return changes, 200
         return None, 204

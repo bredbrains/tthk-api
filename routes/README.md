@@ -1,4 +1,5 @@
 # Routes
+
 | Title | Example | Return |
 | ---- | ---- | ----- |
 | Changes | /changes | Returns full list of changes |
@@ -7,7 +8,9 @@
 | Teachers | /teachers | Returns full list of teachers |
 | Groups | /groups | Returns full list of groups |
 | Status | /status | Returns statuses of services |
+
 ### Departments
+
 | ID | Department |
 | ---- | ---- |
 | 0 | General subjects |
@@ -17,9 +20,13 @@
 | 4 | IT |
 | 5 | Logistics |
 | 6 | Textile & Sales |
+
 ### Response examples
+
 #### Consultations
+
 *Keep in mind that email will be returned, when it defined on the page.*
+
 ```json
 {
     "data": [
@@ -42,7 +49,9 @@
      ]
 }
 ```
+
 #### Changes
+
 ```json
 {
   "data": [
@@ -57,7 +66,9 @@
   ]
 }
 ```
+
 #### Groups
+
 ```json
 {
   "data": [
@@ -71,7 +82,9 @@
   ]
 }
 ```
+
 #### Statuses
+
 ```json
 {
     "data": {
