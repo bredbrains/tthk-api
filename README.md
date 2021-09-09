@@ -4,7 +4,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bredbrains/tthk-api/CodeQL%20+%20pyTest)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/flask)
 
-**TTHK REST API** for get changes, consultations and etc. in GET requests.
+**TTHK REST API** to get changes, consultations and etc. in GET requests.
 Routes can be seen [there](https://github.com/bredbrains/tthk-api/blob/master/routes/README.md).
 ## Team
 * Nikolas Laus ([@blinchk](https://github.com/blinchk))
